@@ -9,10 +9,10 @@ def index():
     View root page function that returns the index page and its data
     '''
 
-    message = 'Hello World'
-    return render_template('index.html')
+    title = 'Home - Welcome to the best news site for both local and international news '
+    return render_template('index.html', title = title)
 
-@app.route('/news/<news_id>')
+@app.route('/news/<int:news_id>')
 def news(news_id):
 
     '''
