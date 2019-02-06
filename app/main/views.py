@@ -29,9 +29,12 @@ def index():
                             entertainment=entertainment_list)
 
 @main.route('/news/<id>')
-def news(news_id):
+def news(id):
 
     '''
     View news page function that returns the news details page and its data
     '''
-    return render_template('news.html',id = news_id)
+    news_args = get_articles(id)
+    highlight_args = 'Route Working!!'
+
+    return render_template('news.html',highlight_param=highlight_args,news=news_args)

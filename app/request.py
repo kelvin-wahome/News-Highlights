@@ -1,20 +1,25 @@
-from app import app
+
 import urllib.request,json
-from .models import news
+from .models import Source,Articles
 
+#Getting api_key
+api_key = None
+#Getting the base_url
+base_url = None
+#Getting source_url
+source_url = None
 
-#Getting api key
-api_key = app.config['NEWS_API_KEY']
-
-#Getting the movie base url
-base_url = app.config['NEWS_API_BASE_URL']
-
+def configure_request(app):
+    global api_key, base_url, source_url
+    api_key = app.config['NEWS_API_KEY']
+    base_url = app.config['NEWS_BASE_API_URL']
+    source_url = app.config['SOURCE_NEWS_URL']
 
 def get_sources(category):
     '''
     Function that gets the json response to our url request
     '''
-    get_news_url = base_url.format(category,api_key)
+    get_news_url = base_url.format(category)
     with urllib.request.urlopen(get_news_url) as url:
         get_news_data = url.read()
         get_news_response = json.loads(get_news_data)
@@ -36,21 +41,17 @@ def process_sources(source_list):
     """
     news_results = []
     for source in source_list:
-        id = source.get('id')
-        print(id)
+        id = source.get(id)
+
         name = source.get('name')
-        print(name)
+
         description = source.get('description')
         url = source.get('url')
         category = source.get('category')
 
         if url:
-            source_object = Source(id,
-                                    name,
-                                    description,
-                                    url,
-                                    category,
-                                            )
+            source_object = Source(id,name,description,url,category)
+
             news_results.append(source_object)
     return news_results
 
@@ -67,7 +68,6 @@ def get_articles(id):
 
         if get_news_response['articles']:
             news_results_list = get_news_response['articles']
-            print(news_results_list)
             news_results = process_articles(news_results_list)
 
     return news_results
@@ -87,7 +87,7 @@ def process_articles(articles_list):
         # source_dictionary['id'] = source_id['id']
         # id = source_dictionary['id']
         #store the nested dictionary in source_id
-        source_id = result['source']['id']
+        source_id = result.get('id')
         #extrect and store it in our source dictionary
         author = result.get('author')
         title = result.get('title')
@@ -97,13 +97,7 @@ def process_articles(articles_list):
         publishedAt = result.get('publishedAt')
 
         if urlToImage:
-            print(id)
-            source_object = Articles(id,
-                                    author,
-                                    title,
-                                    description,
-                                    url,
-                                    urlToImage, publishedAt)
+            source_object = Articles(id,author,title,description,url,urlToImage, publishedAt)
             news_results.append(source_object)
 
     return news_results

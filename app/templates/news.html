@@ -1,1 +1,8 @@
-<h1> Hello news {{ id }} </h1>
+{% extends 'base.html' %} {% import 'macros.html' as macro %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {{macro.displayArticleList(news)}}
+  </div>
+</div>
+{% endblock %}
