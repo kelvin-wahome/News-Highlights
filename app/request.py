@@ -41,7 +41,7 @@ def process_sources(source_list):
     """
     news_results = []
     for source in source_list:
-        id = source.get(id)
+        id = source.get('id')
 
         name = source.get('name')
 
@@ -87,7 +87,8 @@ def process_articles(articles_list):
         # source_dictionary['id'] = source_id['id']
         # id = source_dictionary['id']
         #store the nested dictionary in source_id
-        source_id = result.get('id')
+
+        source_id = result['source']['id']
         #extrect and store it in our source dictionary
         author = result.get('author')
         title = result.get('title')
