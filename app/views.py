@@ -10,13 +10,13 @@ def index():
     View root page function that returns the index page and its data
     '''
 
-    general_list = get_sources('us', 'general')
-    business_list = get_sources('us', 'business')
-    technoloogy_list = get_sources('us', 'technology')
-    sports_list = get_sources('us', 'sports')
-    health_list = get_sources('us', 'health')
-    science_list = get_sources('us', 'science')
-    entertainment_list = get_sources('us', 'entertainment')
+    general_list = get_sources('general')
+    business_list = get_sources('business')
+    technoloogy_list = get_sources('technology')
+    sports_list = get_sources('sports')
+    health_list = get_sources('health')
+    science_list = get_sources('science')
+    entertainment_list = get_sources('entertainment')
     test_args = 'Working!'
     return render_template('index.html',
                             test_param=test_args,
