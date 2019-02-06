@@ -1,5 +1,6 @@
 from flask import render_template
 from app import app
+from .request import get_sources, get_articles
 
 # Views
 @app.route('/')
@@ -9,10 +10,25 @@ def index():
     View root page function that returns the index page and its data
     '''
 
-    title = 'Home - Welcome to the best news site for both local and international news '
-    return render_template('index.html', title = title)
+    general_list = get_sources('us', 'general')
+    business_list = get_sources('us', 'business')
+    technoloogy_list = get_sources('us', 'technology')
+    sports_list = get_sources('us', 'sports')
+    health_list = get_sources('us', 'health')
+    science_list = get_sources('us', 'science')
+    entertainment_list = get_sources('us', 'entertainment')
+    test_args = 'Working!'
+    return render_template('index.html',
+                            test_param=test_args,
+                            general=general_list,
+                            business=business_list,
+                            technology=technoloogy_list,
+                            sports=sports_list,
+                            health=health_list,
+                            science=science_list,
+                            entertainment=entertainment_list)
 
-@app.route('/news/<int:news_id>')
+@app.route('/news/<id>')
 def news(news_id):
 
     '''

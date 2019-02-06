@@ -43,13 +43,13 @@ def process_sources(source_list):
         description = source.get('description')
         url = source.get('url')
         category = source.get('category')
-        country = source.get('country')
+
         if url:
             source_object = Source(id,
                                     name,
                                     description,
                                     url,
                                     category,
-                                    country)
+                                            )
             news_results.append(source_object)
     return news_results
