@@ -1,7 +1,7 @@
 from app import app
 import urllib.request,json
-from .models import Source
-from .models import Articles
+from .models import news
+
 
 #Getting api key
 api_key = app.config['NEWS_API_KEY']
@@ -52,4 +52,40 @@ def process_sources(source_list):
                                     category,
                                             )
             news_results.append(source_object)
+    return news_results
+
+
+def process_articles(articles_list):
+    """
+    Function that processes new list dictionary and turns them to a list of objects
+    Args:
+        news_list: A list of dictionaries that contain news sources_list
+    Returns:
+        news_results: A list of news objects
+    """
+    news_results = []
+    source_dictionary = {}
+    for result in articles_list:
+        # source_dictionary['id'] = source_id['id']
+        # id = source_dictionary['id']
+        #store the nested dictionary in source_id
+        source_id = result['source']['id']
+        #extrect and store it in our source dictionary
+        author = result.get('author')
+        title = result.get('title')
+        description = result.get('description')
+        url = result.get('url')
+        urlToImage = result.get('urlToImage')
+        publishedAt = result.get('publishedAt')
+
+        if urlToImage:
+            print(id)
+            source_object = Articles(id,
+                                    author,
+                                    title,
+                                    description,
+                                    url,
+                                    urlToImage, publishedAt)
+            news_results.append(source_object)
+
     return news_results
